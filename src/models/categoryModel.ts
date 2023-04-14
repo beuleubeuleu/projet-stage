@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
-import { categoryModel }           from "../interfaces/categoryType";
+import { ICategory }     from "../interfaces/InterfaceCategory";
 
-const categorySchema = new Schema<categoryModel>({
+const categorySchema = new Schema<ICategory>({
   name: { type: String, required: true },
   color: { type:String, required: true},
   icon: { type:String, required:true},
@@ -9,6 +9,6 @@ const categorySchema = new Schema<categoryModel>({
 });
 
 // Create and export the model
-const Category = model<categoryModel>('Category', categorySchema);
+const Category = model<ICategory>('Category', categorySchema);
 
 export default Category;

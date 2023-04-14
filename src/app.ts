@@ -1,6 +1,7 @@
 import express from 'express';
 import * as dotenv from "dotenv"
 import { main }    from "./config/dbConfig";
+import categoryRouter from "./Routes/categoryRoute";
 
 dotenv.config()
 const app = express()

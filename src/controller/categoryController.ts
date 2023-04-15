@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import Category from '../models/categoryModel';
 
-// GET all categories
 export const getAllCategories = async (req: Request, res: Response) => {
   try {
     const categories = await Category.find();
@@ -12,7 +11,6 @@ export const getAllCategories = async (req: Request, res: Response) => {
   }
 };
 
-// GET a single category by ID
 export const getOneCategory = async (req: Request, res: Response) => {
   try {
     const category = await Category.findById(req.params.idCategory);
@@ -26,7 +24,6 @@ export const getOneCategory = async (req: Request, res: Response) => {
   }
 };
 
-// POST a new category
 export const createCategory = async (req: Request, res: Response) => {
   try {
     const newCategory = await Category.create(req.body);
@@ -37,7 +34,6 @@ export const createCategory = async (req: Request, res: Response) => {
   }
 };
 
-// PUT update an existing category
 export const updateCategory = async (req: Request, res: Response) => {
   try {
     const updatedCategory = await Category.findByIdAndUpdate(
@@ -55,7 +51,6 @@ export const updateCategory = async (req: Request, res: Response) => {
   }
 };
 
-// DELETE a category
 export const deleteCategory = async (req: Request, res: Response) => {
   try {
     const deletedCategory = await Category.findByIdAndDelete(req.params.idCategory

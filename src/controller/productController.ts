@@ -105,6 +105,7 @@ export const deleteProduct = async (req: Request, res: Response) => {
   }
 };
 
+/*
 export const updateProductGallery = async (req: Request, res: Response) => {
 
 }
@@ -115,4 +116,4 @@ export const getFeaturedProducts = async (req: Request, res: Response) => {
 
 export const getProductCount = async (req: Request, res: Response) => {
 
-}
+}*/

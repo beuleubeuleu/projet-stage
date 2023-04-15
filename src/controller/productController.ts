@@ -27,27 +27,31 @@ export const getOneProduct = async (req: Request, res: Response) => {
 
 export const createProduct = async (req: Request, res: Response) => {
   try {
-    const {
-            name,
-            description,
-            richDescription,
-            image,
-            images,
-            brand,
-            price,
-            category,
-            countInStock,
-            rating,
-            numReviews,
-            isFeatured
-          } = req.body;
-    // Check if category exists
-    const existingCategory = await Category.findById(category);
-    if (!existingCategory) {
-      return res.status(400).json({ message: "Invalid category" });
+    const product = new Product({
+      name: req.body.name,
+      description: req.body.description,
+      richDescription: req.body.richDescription,
+      image: req.file.path, // this will store the file path in the database
+      images: req.body.images,
+      brand: req.body.brand,
+      price: req.body.price,
+      category: req.body.category,
+      countInStock: req.body.countInStock,
+      rating: req.body.rating,
+      numReviews: req.body.numReviews,
+      isFeatured: req.body.isFeatured,
+    });
+
+    const newProduct = await product.save();
+    if (!newProduct) {
+      return res.status(500).json({ message: "Failed to create product" });
     }
+    res.status(201).json(newProduct);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to create product" });
   }
-}
+};
 
 export const updateProduct = async (req: Request, res: Response) => {
 

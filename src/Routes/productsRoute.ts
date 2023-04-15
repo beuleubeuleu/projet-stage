@@ -7,7 +7,7 @@ const productsRouter = Router();
 productsRouter.get("/", getAllProducts);
 productsRouter.get("/:idProduct", getOneProduct);
 productsRouter.post("/", upload.single('image'), createProduct);
-productsRouter.put("/:idProduct", updateProduct);
+productsRouter.put("/:idProduct", upload.single('image'), updateProduct);
 productsRouter.delete("/:idProduct", deleteProduct);
 productsRouter.put("/gallery-images/:idProduct", updateProductGallery);
 productsRouter.get("/get/featured/:countProduct", getFeaturedProducts);

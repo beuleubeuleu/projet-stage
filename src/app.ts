@@ -16,6 +16,6 @@ main().catch(err => console.log(err));
 app.use(express.json());
 app.use("/api/v1/category", categoryRouter)
 app.use("/api/v1/products", productsRouter)
-app.use("api/v1/users", usersRouter)
+app.use("/api/v1/users", usersRouter)
 
 export default app

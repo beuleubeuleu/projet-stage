@@ -13,14 +13,14 @@ export const getUsers = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-export const getUserById = async (req:Request, res:Response) => {
+export const getUserById = async (req: Request, res: Response) => {
   try {
     const user: IUser | null = await User.findById(req.params.idUser);
-    if (!user) {
+    if ( !user ) {
       return res.status(404).json({ message: "user not found" });
     }
     res.status(200).json(user)
-  } catch(error){
+  } catch (error) {
     console.error(error)
     res.status(500).json({ message: "Internal server error" });
   }
@@ -63,13 +63,13 @@ export const updateUser = async (req: Request, res: Response) => {
         req.body,
         { new: true }
     );
-    if (!updatedUser) {
-      return res.status(404).json({ message: 'User not found' });
+    if ( !updatedUser ) {
+      return res.status(404).json({ message: "User not found" });
     }
     res.status(200).json(updatedUser);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 export const deleteUser = async (req: Request, res: Response) => {
@@ -77,17 +77,27 @@ export const deleteUser = async (req: Request, res: Response) => {
     const toDeleteUser: IUser = await Category.findByIdAndDelete(
         req.params.idUser
     );
-    if (!toDeleteUser) {
-      return res.status(404).json({ message: 'User not found' });
+    if ( !toDeleteUser ) {
+      return res.status(404).json({ message: "User not found" });
     }
-    res.status(200).json({message: "User killed"});
+    res.status(200).json({ message: "User killed" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
-export const getUserCount = () => {
+export const getUserCount = async (req: Request, res: Response) => {
+  try {
+    const userCount = await User.estimatedDocumentCount()
+    if ( !userCount ) {
+      return res.status(500).json({ message: "could not get user count" })
+    }
 
+    res.status(200).json(userCount)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "internal server error" })
+  }
 }
 export const registerUser = async (req: Request, res: Response) => {
   try {

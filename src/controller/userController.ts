@@ -13,8 +13,17 @@ export const getUsers = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-export const getUserById = () => {
-
+export const getUserById = async (req:Request, res:Response) => {
+  try {
+    const user: IUser | null = await User.findById(req.params.idUser);
+    if (!user) {
+      return res.status(404).json({ message: "user not found" });
+    }
+    res.status(200).json(user)
+  } catch(error){
+    console.error(error)
+    res.status(500).json({ message: "Internal server error" });
+  }
 }
 export const createUser = async (req: Request, res: Response) => {
   try {

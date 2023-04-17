@@ -3,6 +3,7 @@ import bcrypt                from "bcryptjs"
 import jwt                   from "jsonwebtoken"
 import User                  from "../models/userModel";
 import { IUser }             from "../interfaces/InterfaceUser";
+import Category              from "../models/categoryModel";
 
 export const getUsers = async (req: Request, res: Response) => {
   try {
@@ -46,12 +47,36 @@ export const createUser = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-export const updateUser = () => {
-
-}
-export const deleteUser = () => {
-
-}
+export const updateUser = async (req: Request, res: Response) => {
+  try {
+    const updatedUser: IUser = await Category.findByIdAndUpdate(
+        req.params.idUser,
+        req.body,
+        { new: true }
+    );
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+export const deleteUser = async (req: Request, res: Response) => {
+  try {
+    const toDeleteUser: IUser = await Category.findByIdAndDelete(
+        req.params.idUser
+    );
+    if (!toDeleteUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.status(200).json({message: "User killed"});
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
 export const getUserCount = () => {
 
 }

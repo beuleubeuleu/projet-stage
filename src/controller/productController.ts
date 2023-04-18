@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import Product               from "../models/productModel"
 import { deleteFile }        from "../utils/deleteFile";
-import User                  from "../models/userModel";
 
 export const getAllProducts = async (req: Request, res: Response) => {
   try {
@@ -59,14 +58,14 @@ export const updateProduct = async (req: Request, res: Response) => {
     const productId = req.params.idProduct;
     const product = await Product.findById(productId);
 
-    if (!product) {
-      return res.status(404).json({ message: 'Product not found' });
+    if ( !product ) {
+      return res.status(404).json({ message: "Product not found" });
     }
 
     // If request has an image file, use multer for file upload
-    if (req.file) {
+    if ( req.file ) {
       // Delete previous image if it exists
-      if (product.image) {
+      if ( product.image ) {
         await deleteFile(product.image);
       }
       // Save the new image
@@ -89,14 +88,14 @@ export const updateProduct = async (req: Request, res: Response) => {
     res.status(200).json(updatedProduct);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Failed to update product' });
+    res.status(500).json({ message: "Failed to update product" });
   }
 };
 
 export const deleteProduct = async (req: Request, res: Response) => {
   try {
     const deletedProduct = await Product.findByIdAndDelete(req.params.id);
-    if (!deletedProduct) {
+    if ( !deletedProduct ) {
       return res.status(404).json({ message: "Product not found" });
     }
     res.status(200).json({ message: "Product deleted successfully" });
@@ -107,13 +106,27 @@ export const deleteProduct = async (req: Request, res: Response) => {
 };
 
 /*
-export const updateProductGallery = async (req: Request, res: Response) => {
+ export const updateProductGallery = async (req: Request, res: Response) => {
 
-}
+ }*/
 
 export const getFeaturedProducts = async (req: Request, res: Response) => {
+  const reqCount = req.params.countProduct
+  try {
+    const featuredProducts = await Product.find({ isFeatured: true }).limit(parseInt(reqCount))
+    if ( !featuredProducts ) {
+      return res.status(404).json({ message: "Product not found" })
+    }
+    if ( featuredProducts.length == 0 ) {
+      return res.status(404).json({ message: "No featured product" })
+    }
 
-}*/
+    res.status(200).json(featuredProducts)
+  } catch (error) {
+    console.error(error);
+    res.status(500).json("internal server error")
+  }
+}
 
 export const getProductCount = async (req: Request, res: Response) => {
   try {

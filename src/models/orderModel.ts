@@ -2,7 +2,6 @@ import { model, Schema } from "mongoose";
 import { IOrder }        from "../interfaces/InterfaceOrder";
 
 const orderSchema = new Schema<IOrder>({
-  orderItems: [{ type: Schema.Types.ObjectId, ref: "OrderItem", required: true }],
   shippingAddress1: { type: String, required: true },
   shippingAddress2: { type: String },
   city: { type: String, required: true },

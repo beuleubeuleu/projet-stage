@@ -27,7 +27,7 @@ export const getOneProduct = async (req: Request, res: Response) => {
 
 export const createProduct = async (req: Request, res: Response) => {
   try {
-    const product = new Product({
+    const product = await Product.create({
       name: req.body.name,
       description: req.body.description,
       richDescription: req.body.richDescription,
@@ -42,11 +42,10 @@ export const createProduct = async (req: Request, res: Response) => {
       isFeatured: req.body.isFeatured
     });
 
-    const newProduct = await product.save();
-    if ( !newProduct ) {
+    if ( !product ) {
       return res.status(500).json({ message: "Failed to create product" });
     }
-    res.status(201).json(newProduct);
+    res.status(201).json(product);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Failed to create product" });

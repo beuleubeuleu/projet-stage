@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import Product               from "../models/productModel"
 import { deleteFile }        from "../utils/deleteFile";
+import User                  from "../models/userModel";
 
 export const getAllProducts = async (req: Request, res: Response) => {
   try {
@@ -112,8 +113,18 @@ export const updateProductGallery = async (req: Request, res: Response) => {
 
 export const getFeaturedProducts = async (req: Request, res: Response) => {
 
-}
+}*/
 
 export const getProductCount = async (req: Request, res: Response) => {
+  try {
+    const productCount = await Product.estimatedDocumentCount()
+    if ( !productCount ) {
+      return res.status(500).json({ message: "could not get product count" })
+    }
 
-}*/
+    res.status(200).json(productCount)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "internal server error" })
+  }
+}

@@ -16,11 +16,13 @@ const Authenticate = () => {
     ;
   };
 
+  let accentText = isRegister? "Sign in": "Register"
+
   return (
       <div className={`${style.container} ${animate? style.swingOutBottomBack: ""}`}>
         {isRegister ? <Register /> : <Login />}
         <p onClick={handleToggleAuth}>
-          {isRegister ? "Already have an account? Log in" : "Don't have an account? Register"}
+          {isRegister ? "Already have an account? " : "Don't have an account? "} <span>{ accentText }</span>
         </p>
       </div>
   );

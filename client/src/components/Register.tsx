@@ -1,8 +1,14 @@
-import React, { useRef } from "react";
-import axios from "axios";
+import React, { useRef, useState } from "react";
+import axios                       from "axios";
 import style from "./LoginRegister.module.css";
+import { Navigate }      from "react-router-dom";
+import toast                       from "react-hot-toast";
+import { Simulate }                from "react-dom/test-utils";
+import durationChange = Simulate.durationChange;
 
 const Register: React.FC = () => {
+  const [isRegisterSuccess, setIsRegisterSuccess] = useState(false);
+
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -29,12 +35,21 @@ const Register: React.FC = () => {
         country: countryRef.current?.value,
       });
 
-      console.log(response.data);
+      response.status == 201? setIsRegisterSuccess(true): toast.error(response.data.message);
     } catch (err) {
       console.error(err);
     }
   };
-
+if(isRegisterSuccess) {
+  toast.success("go login masta", {duration: 100000})
+  return <>
+    <iframe src="https://giphy.com/embed/111ebonMs90YLu" width="480" height="360" frameBorder="0"
+            className="giphy-embed" allowFullScreen></iframe>
+    <p>
+      <a href="https://giphy.com/gifs/thumbs-up-111ebonMs90YLu">via GIPHY</a>
+    </p>
+  </>
+}
   return (
       <div className={style.container}>
         <h3 className={style.title}>Registration</h3>

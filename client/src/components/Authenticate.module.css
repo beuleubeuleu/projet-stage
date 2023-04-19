@@ -6,6 +6,20 @@
   transition: all 0.3s ease-in-out;
 }
 
+p {
+  font-size : 1.2rem;
+  font-weight : 200;
+}
+
+p:hover > span{
+  text-decoration : underline;
+}
+
+span {
+  color: #F04F04;
+  font-weight : 400;
+}
+
 .swingOutBottomBack:nth-child(3)  {
   animation: swing-out-bottom-bck 0.7s ease-in;
 }

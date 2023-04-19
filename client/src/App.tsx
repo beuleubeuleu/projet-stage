@@ -1,10 +1,14 @@
-import "./App.css"
+import style from "./App.module.css"
+import React from "react";
+import { Header }      from "./components/Header";
+import { ProductList } from "./components/ProductList";
 
-function App() {
+const App = () => {
 
   return (
-      <div className="App">
-
+      <div className={style.App}>
+        <Header/>
+        <ProductList/>
       </div>
   )
 }

@@ -31,7 +31,7 @@ export const createProduct = async (req: Request, res: Response) => {
       name: req.body.name,
       description: req.body.description,
       richDescription: req.body.richDescription,
-      image: req.file.path, // this will store the file path in the database
+      image: req.file.path.split("/").slice(2).join("/"), // this will store the file path in the database
       images: req.body.images,
       brand: req.body.brand,
       price: req.body.price,

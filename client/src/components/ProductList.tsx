@@ -1,6 +1,6 @@
-import useFetch        from "../hooks/useFetch"
-import style           from "./ProductList.module.css"
-import { IProduct }    from "../interface/IProduct";
+import useFetch     from "../hooks/useFetch"
+import style        from "./ProductList.module.css"
+import { IProduct } from "../interface/IProduct";
 import { ProductCard } from "./ProductCard";
 
 export const ProductList = () => {

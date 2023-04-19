@@ -23,7 +23,7 @@ const useFetch = (url: string) => {
     };
 
     dataFetching();
-  }, []);
+  }, [url]);
 
   return {
     data,

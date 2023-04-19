@@ -1,6 +1,7 @@
-import style        from "./ProductList.module.css";
+import style        from "./ProductCard.module.css";
 import { truncate } from "../utils";
 import { IProduct } from "../interface/IProduct";
+
 
 interface ProductCardProps {
   product: IProduct
@@ -8,24 +9,24 @@ interface ProductCardProps {
 
 export const ProductCard = ({ product }: ProductCardProps) => {
   return (
-      <div className={ style.card } key={ product._id }>
+      <li className={ style.card } key={ product._id }>
         <img
             className={ style.image }
-            src={ product.image }
+            src={ `../${product.image}` }
             alt={ product.name }
         />
         <div className={ style.content }>
           <h5
               className={ style.title }
-              title={ product.name.length >= 50? product.name: undefined }
+              title={ product.name.length >= 25? product.name: undefined }
           >
-            { truncate(product.name, 55) }
+            { truncate(product.name, 25) }
           </h5>
+          <p className={ style.price }>${ product.price }</p>
           <p className={ style.description }>
             { truncate(product.description, 55) }
           </p>
-          <p className={ style.price }>${ product.price }</p>
         </div>
-      </div>
+      </li>
   );
 };

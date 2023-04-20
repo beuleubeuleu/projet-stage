@@ -148,5 +148,6 @@ export const loginUser = async (req: Request, res: Response) => {
       { userId: user._id, email: user.email },
       process.env.JWT_SECRET, { expiresIn: "1h" }
   )
-  res.status(200).json({ token })
+  user[token] = token
+  res.status(200).json({ user })
 }

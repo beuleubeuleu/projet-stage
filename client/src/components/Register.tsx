@@ -1,10 +1,7 @@
 import React, { useRef, useState } from "react";
-import axios                       from "axios";
-import style from "./LoginRegister.module.css";
-import { Navigate }      from "react-router-dom";
+import style                       from "./LoginRegister.module.css";
 import toast                       from "react-hot-toast";
-import { Simulate }                from "react-dom/test-utils";
-import durationChange = Simulate.durationChange;
+import AuthService                 from "../../services/AuthService";
 
 const Register: React.FC = () => {
   const [isRegisterSuccess, setIsRegisterSuccess] = useState(false);
@@ -23,51 +20,51 @@ const Register: React.FC = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("/api/v1/users/register", {
-        name: nameRef.current?.value,
-        email: emailRef.current?.value,
-        password: passwordRef.current?.value,
-        phone: phoneRef.current?.value,
-        street: streetRef.current?.value,
-        apartment: apartmentRef.current?.value,
-        zip: zipRef.current?.value,
-        city: cityRef.current?.value,
-        country: countryRef.current?.value,
-      });
-
-      response.status == 201? setIsRegisterSuccess(true): toast.error(response.data.message);
-    } catch (err) {
-      console.error(err);
+      const request = await AuthService.register(
+          nameRef.current!.value,
+          emailRef.current!.value,
+          passwordRef.current!.value,
+          phoneRef.current!.value,
+          streetRef.current!.value,
+          apartmentRef.current!.value,
+          zipRef.current!.value,
+          cityRef.current!.value,
+          countryRef.current!.value
+      )
+      toast.success("go login masta", { duration: 100000 })
+      setIsRegisterSuccess(true)
+    } catch (error: any) {
+      toast.error(`error:${ error.response.status }\n ${ error.response.data.message }`)
     }
   };
-if(isRegisterSuccess) {
-  toast.success("go login masta", {duration: 100000})
-  return <>
-    <iframe src="https://giphy.com/embed/111ebonMs90YLu" width="480" height="360" frameBorder="0"
-            className="giphy-embed" allowFullScreen></iframe>
-    <p>
-      <a href="https://giphy.com/gifs/thumbs-up-111ebonMs90YLu">via GIPHY</a>
-    </p>
-  </>
-}
+  if ( isRegisterSuccess ) {
+    return <>
+      <iframe src="https://giphy.com/embed/111ebonMs90YLu" width="480" height="360" frameBorder="0"
+              className="giphy-embed" allowFullScreen></iframe>
+      <p>
+        <a href="https://giphy.com/gifs/thumbs-up-111ebonMs90YLu">via GIPHY</a>
+      </p>
+    </>
+  }
   return (
-      <div className={style.container}>
-        <h3 className={style.title}>Registration</h3>
-        <form className={style.form} onSubmit={handleSubmit}>
-          <div className={style.formGroup}>
-            <input className={style.input} type="text" name="name" placeholder="Name" ref={nameRef} />
-            <input className={style.input} type="email" name="email" placeholder="Email" ref={emailRef} />
-            <input className={style.input} type="password" name="password" placeholder="Password" ref={passwordRef} />
-            <input className={style.input} type="tel" name="phone" placeholder="Phone" ref={phoneRef} />
+      <div className={ style.container }>
+        <h3 className={ style.title }>Registration</h3>
+        <form className={ style.form } onSubmit={ handleSubmit }>
+          <div className={ style.formGroup }>
+            <input className={ style.input } type="text" name="name" placeholder="Name" required ref={ nameRef }/>
+            <input className={ style.input } type="email" name="email" placeholder="Email" required ref={ emailRef }/>
+            <input className={ style.input } type="password" name="password" placeholder="Password" required
+                   ref={ passwordRef }/>
+            <input className={ style.input } type="tel" name="phone" placeholder="Phone" required ref={ phoneRef }/>
           </div>
-          <div className={style.formGroup}>
-            <input className={style.input} type="text" name="street" placeholder="Street" ref={streetRef} />
-            <input className={style.input} type="text" name="apartment" placeholder="Apartment" ref={apartmentRef} />
-            <input className={style.input} type="text" name="zip" placeholder="Zip" ref={zipRef} />
-            <input className={style.input} type="text" name="city" placeholder="City" ref={cityRef} />
-            <input className={style.input} type="text" name="country" placeholder="Country" ref={countryRef} />
+          <div className={ style.formGroup }>
+            <input className={ style.input } type="text" name="street" placeholder="Street" defaultValue={""} ref={ streetRef }/>
+            <input className={ style.input } type="text" name="apartment" placeholder="Apartment" defaultValue={""} ref={ apartmentRef }/>
+            <input className={ style.input } type="text" name="zip" placeholder="Zip" defaultValue={""} ref={ zipRef }/>
+            <input className={ style.input } type="text" name="city" placeholder="City" defaultValue={""} ref={ cityRef }/>
+            <input className={ style.input } type="text" name="country" placeholder="Country" defaultValue={""} ref={ countryRef }/>
           </div>
-          <button className={style.submit} type="submit">Register</button>
+          <button className={ style.submit } type="submit">Register</button>
         </form>
       </div>
   );

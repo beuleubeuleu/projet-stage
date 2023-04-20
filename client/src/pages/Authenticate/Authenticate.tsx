@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import style from "./Authenticate.module.css"
+import style    from "./Authenticate.module.css"
 import Register from "./Register";
-import Login from "./Login";
+import Login    from "./Login";
 
 const Authenticate = () => {
   const [isRegister, setIsRegister] = useState(true);

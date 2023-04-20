@@ -1,6 +1,6 @@
-import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
-import AuthService                                                          from "../services/AuthService";
-import { UserType }                           from "../types/userType";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import AuthService                                               from "../services/AuthService";
+import { UserType }                                              from "../types/userType";
 
 type contextProps = {
   children: React.ReactNode
@@ -38,8 +38,8 @@ const UserProvider = ({ children }: contextProps) => {
   }, []);
 
   return (
-      <UserContext.Provider value={{ user, token, checkUserData}}>
-        {children}
+      <UserContext.Provider value={ { user, token, checkUserData } }>
+        { children }
       </UserContext.Provider>
   );
 };

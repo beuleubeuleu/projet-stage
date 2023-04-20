@@ -39,7 +39,7 @@ const Register: React.FC = () => {
   };
   if ( isRegisterSuccess ) {
     return <>
-      <iframe src="https://giphy.com/embed/111ebonMs90YLu" width="480" height="360" frameBorder="0"
+      <iframe src="https://giphy.com/embed/111ebonMs90YLu" width="480" height="360"
               className="giphy-embed" allowFullScreen></iframe>
       <p>
         <a href="https://giphy.com/gifs/thumbs-up-111ebonMs90YLu">via GIPHY</a>
@@ -58,11 +58,16 @@ const Register: React.FC = () => {
             <input className={ style.input } type="tel" name="phone" placeholder="Phone" required ref={ phoneRef }/>
           </div>
           <div className={ style.formGroup }>
-            <input className={ style.input } type="text" name="street" placeholder="Street" defaultValue={""} ref={ streetRef }/>
-            <input className={ style.input } type="text" name="apartment" placeholder="Apartment" defaultValue={""} ref={ apartmentRef }/>
-            <input className={ style.input } type="text" name="zip" placeholder="Zip" defaultValue={""} ref={ zipRef }/>
-            <input className={ style.input } type="text" name="city" placeholder="City" defaultValue={""} ref={ cityRef }/>
-            <input className={ style.input } type="text" name="country" placeholder="Country" defaultValue={""} ref={ countryRef }/>
+            <input className={ style.input } type="text" name="street" placeholder="Street" defaultValue={ "" }
+                   ref={ streetRef }/>
+            <input className={ style.input } type="text" name="apartment" placeholder="Apartment" defaultValue={ "" }
+                   ref={ apartmentRef }/>
+            <input className={ style.input } type="text" name="zip" placeholder="Zip" defaultValue={ "" }
+                   ref={ zipRef }/>
+            <input className={ style.input } type="text" name="city" placeholder="City" defaultValue={ "" }
+                   ref={ cityRef }/>
+            <input className={ style.input } type="text" name="country" placeholder="Country" defaultValue={ "" }
+                   ref={ countryRef }/>
           </div>
           <button className={ style.submit } type="submit">Register</button>
         </form>

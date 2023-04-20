@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
-import style                       from "./LoginRegister.module.css";
-import AuthService                 from "../../services/AuthService";
-import toast                       from "react-hot-toast";
-import { useNavigate }                from "react-router-dom";
+import style       from "./LoginRegister.module.css";
+import AuthService from "../../services/AuthService";
+import toast       from "react-hot-toast";
+import { useNavigate }    from "react-router-dom";
 import { useUserContext } from "../../context/UserContext";
 
 const Login: React.FC = () => {

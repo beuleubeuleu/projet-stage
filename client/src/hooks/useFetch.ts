@@ -1,34 +1,50 @@
-import { useEffect, useState } from "react";
-import axios                   from "axios";
+import { useState, useEffect } from "react";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
-const useFetch = (url: string) => {
-  const [data, setData] = useState<any[] | null>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState(null);
+interface UseFetchResponse<T> {
+  data: T | null;
+  error: Error | null;
+  isLoading: boolean;
+}
+
+function useFetch<T = any>(
+    url: string,
+    config?: AxiosRequestConfig
+): UseFetchResponse<T> {
+  const [data, setData] = useState<T | null>(null);
+  const [error, setError] = useState<Error | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    const dataFetching = async () => {
-      try {
-        const response = await axios.get(url); // wait until the promise resolves
+    let isMounted = true;
 
-        setData(response.data);
-        setError(null);
+    const fetchData = async () => {
+      setIsLoading(true);
+
+      try {
+        const response: AxiosResponse<T> = await axios(url, config);
+        if (isMounted) {
+          setData(response.data);
+        }
       } catch (err: any) {
-        setError(err.message);
-        setData(null);
+        if (isMounted) {
+          setError(err);
+        }
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setIsLoading(false);
+        }
       }
     };
 
-    dataFetching();
-  }, [url]);
+    fetchData();
 
-  return {
-    data,
-    loading,
-    error
-  };
-};
+    return () => {
+      isMounted = false;
+    };
+  }, [url, config]);
+
+  return { data, error, isLoading };
+}
 
 export default useFetch;

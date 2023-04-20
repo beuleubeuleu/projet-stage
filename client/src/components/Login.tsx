@@ -1,8 +1,11 @@
 import React, { useRef, useState } from "react";
-import axios from "axios";
-import style from "./LoginRegister.module.css";
+import style                       from "./LoginRegister.module.css";
+import AuthService                 from "../../services/AuthService";
+import toast                       from "react-hot-toast";
+import { useNavigate }                from "react-router-dom";
 
 const Login: React.FC = () => {
+  const navigate = useNavigate()
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const [showPassword, setShowPassword] = useState(false);
@@ -11,14 +14,15 @@ const Login: React.FC = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("/api/v1/users/login", {
-        email: emailRef.current?.value,
-        password: passwordRef.current?.value,
-      });
-
-      console.log(response.data);
-    } catch (err) {
-      console.error(err);
+      const response = await AuthService.login(
+          emailRef.current!.value,
+          passwordRef.current!.value
+      )
+      toast.success(`Hello ${response.user.name}`)
+      navigate("/home")
+    } catch (error: any) {
+      console.log(error)
+      toast.error(`Oh nooo, ${ error.response.data.message }! `)
     }
   };
 
@@ -27,25 +31,25 @@ const Login: React.FC = () => {
   };
 
   return (
-      <div className={style.container}>
-        <h3 className={style.title}>Login</h3>
-        <form className={style.form} onSubmit={handleSubmit}>
-          <div className={style.formGroup}>
-            <input className={style.input} type="email" name="email" placeholder="Email" ref={emailRef} />
-            <div className={style.passwordGroup}>
+      <div className={ style.container }>
+        <h3 className={ style.title }>Login</h3>
+        <form className={ style.form } onSubmit={ handleSubmit }>
+          <div className={ style.formGroup }>
+            <input className={ style.input } type="email" name="email" placeholder="Email" ref={ emailRef }/>
+            <div className={ style.passwordGroup }>
               <input
-                  className={style.input}
-                  type={showPassword ? "text" : "password"}
+                  className={ style.input }
+                  type={ showPassword? "text": "password" }
                   name="password"
                   placeholder="Password"
-                  ref={passwordRef}
+                  ref={ passwordRef }
               />
-              <label className={style.showPasswordLabel}>
-                <input className={style.showPasswordCheckbox} type="checkbox" onChange={handleShowPassword} />
+              <label className={ style.showPasswordLabel }>
+                <input className={ style.showPasswordCheckbox } type="checkbox" onChange={ handleShowPassword }/>
                 Show Password
               </label>
             </div>
-            <button className={style.submit} type="submit">
+            <button className={ style.submit } type="submit">
               Login
             </button>
           </div>

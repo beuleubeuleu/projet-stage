@@ -34,7 +34,7 @@ const Register: React.FC = () => {
       toast.success("go login masta", { duration: 100000 })
       setIsRegisterSuccess(true)
     } catch (error: any) {
-      toast.error(`error:${ error.response.status }\n ${ error.response.data.message }`)
+      toast.error(`mmh, ${ error.response.data.message }`)
     }
   };
   if ( isRegisterSuccess ) {

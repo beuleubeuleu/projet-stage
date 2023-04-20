@@ -14,6 +14,17 @@ class AuthService {
       country
     });
   }
+
+  static async login(email:string, password:string): Promise<any> {
+    return axios.post("/api/v1/users/login", {email, password})
+                .then(res => {
+                  if (res.data.token) {
+                    sessionStorage.setItem('user', JSON.stringify(res.data))
+                  }
+                  return res.data
+                });
+  }
+
 }
 
 export default AuthService

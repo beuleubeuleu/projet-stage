@@ -7,7 +7,6 @@ import { Toaster }                                       from "react-hot-toast";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import { useUserContext }                                from "./context/UserContext";
 import ProductDetail                                     from "./pages/ProductDetail/ProductDetail";
-import { Loading }                                       from "./components/Loading";
 
 
 const App = () => {
@@ -16,7 +15,7 @@ const App = () => {
   const router = createBrowserRouter([
     { path: "/", element: user? <Navigate to={ "/home" } replace/>: <Authenticate/> },
     { path: "/home", element: user? <ProductList/>: <Navigate to={ "/" }/> },
-    { path: "/home/:idProduct", element: user? <ProductDetail/>: <Navigate to={ "/" }/> },
+    { path: "/home/:idProduct", element: user? <ProductDetail/>: <Navigate to={ "/" }/> }
   ]);
 
   return (

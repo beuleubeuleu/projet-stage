@@ -20,7 +20,7 @@ const Register: React.FC = () => {
     e.preventDefault();
 
     try {
-      const request = await AuthService.register(
+      await AuthService.register(
           nameRef.current!.value,
           emailRef.current!.value,
           passwordRef.current!.value,

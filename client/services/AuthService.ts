@@ -1,4 +1,6 @@
 import axios from "axios";
+import { UserType } from "../types/userType";
+import { getObjectFromSessionStorage } from "../src/utils";
 
 class AuthService {
   static async register(name: string, email: string, password: string, phone: string, street: string, apartment: string, zip: string, city: string, country: string): Promise<any> {
@@ -23,6 +25,15 @@ class AuthService {
                   }
                   return res.data
                 });
+  }
+
+  static logout() {
+    localStorage.removeItem('user')
+  }
+
+  static getLoggedInUser() {
+    const user: {token: string, user:UserType} = getObjectFromSessionStorage("user");
+    return user? user: null
   }
 
 }

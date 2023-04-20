@@ -18,7 +18,6 @@ const useFetch = (url: string) => {
         setData(null);
       } finally {
         setLoading(false);
-        console.log("nice")
       }
     };
 

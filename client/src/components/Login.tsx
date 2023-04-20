@@ -3,9 +3,13 @@ import style                       from "./LoginRegister.module.css";
 import AuthService                 from "../../services/AuthService";
 import toast                       from "react-hot-toast";
 import { useNavigate }                from "react-router-dom";
+import { useUserContext } from "../../context/UserContext";
 
 const Login: React.FC = () => {
   const navigate = useNavigate()
+
+  const {checkUserData} = useUserContext()
+
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const [showPassword, setShowPassword] = useState(false);
@@ -19,7 +23,10 @@ const Login: React.FC = () => {
           passwordRef.current!.value
       )
       toast.success(`Hello ${response.user.name}`)
-      navigate("/home")
+
+      checkUserData()
+
+      return navigate("/home")
     } catch (error: any) {
       console.log(error)
       toast.error(`Oh nooo, ${ error.response.data.message }! `)
